@@ -28,8 +28,6 @@ namespace server_baby
 	public:
 		explicit NetRPCMaker(const char* SC_Protocol = "Net_RPC_SC_Protocol.ini", const char* CS_Protocol = "Net_RPC_CS_Protocol.ini") : procCount_SC_(NULL), procCount_CS_(NULL)
 		{
-			//ÆÄ¼­ ½Ì±ÛÅæ Á» ¿À¹ö¿£Áö´Ï¾î¸µ
-			//SC Protocol ÆÄ½Ì
 			Parser::GetInstance()->LoadFile(SC_Protocol);
 			Parser::GetInstance()->GetString("ServerName", serverName_);
 			Parser::GetInstance()->GetString("ClientName", clientName_);
@@ -65,7 +63,7 @@ namespace server_baby
 				tok = strtok_s(buffer, "$", &buffer);
 			}	
 
-			//CS Protocol ÆÄ½Ì
+			//CS Protocol íŒŒì‹±
 			Parser::GetInstance()->LoadFile(CS_Protocol);
 			char newServer[512] = { 0 };
 			char newClient[512] = { 0 };
@@ -136,7 +134,7 @@ namespace server_baby
 			sprintf_s(fileName, "%s_SC_Proxy.h", serverName_);
 			if (fopen_s(&stream, fileName, "w") == 0)
 			{
-				//Çì´õ
+				//í—¤ë”
 				fprintf(stream, "#pragma once\n");
 				fprintf(stream, "#include \"NetRoot/NetServer/NetPacket.h\"\n");
 				fprintf(stream, "#include \"NetRoot/NetServer/NetSessionID.h\"\n");
@@ -146,7 +144,7 @@ namespace server_baby
 				fprintf(stream, "namespace server_baby\n");
 				fprintf(stream, "{\n");
 
-				//»ı¼ºÀÚ
+				//ìƒì„±ì
 				fprintf(stream, "\tclass %s_SC_Proxy final\n", serverName_);
 				fprintf(stream, "\t{\n");
 				fprintf(stream, "\tpublic:\n");
@@ -155,7 +153,7 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_SC_; i++)
 				{
-					//°³º° ÇÔ¼ö
+					//ê°œë³„ í•¨ìˆ˜
 					fprintf(stream, "\t\tvoid %s(", procInfo_ServerClient[i].functionName_);
 
 					
@@ -199,7 +197,7 @@ namespace server_baby
 					fprintf(stream, "\n");
 				}
 
-				//¸â¹ö
+				//ë©¤ë²„
 				fprintf(stream, "\tprivate:\n");
 				fprintf(stream, "\t\t%s* server_;\n", serverName_);
 				fprintf(stream, "\t};\n");
@@ -217,7 +215,7 @@ namespace server_baby
 			sprintf_s(fileName, "%s_CS_Proxy.h", clientName_);
 			if (fopen_s(&stream, fileName, "w") == 0)
 			{
-				//Çì´õ
+				//í—¤ë”
 				fprintf(stream, "#pragma once\n");
 				fprintf(stream, "#include \"NetRoot/NetServer/NetPacket.h\"\n");
 				fprintf(stream, "#include \"%s.h\"\n", clientName_);
@@ -226,7 +224,7 @@ namespace server_baby
 				fprintf(stream, "namespace server_baby\n");
 				fprintf(stream, "{\n");
 
-				//»ı¼ºÀÚ
+				//ìƒì„±ì
 				fprintf(stream, "\tclass %s_CS_Proxy final\n", clientName_);
 				fprintf(stream, "\t{\n");
 				fprintf(stream, "\tpublic:\n");
@@ -235,7 +233,7 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_CS_; i++)
 				{
-					//°³º° ÇÔ¼ö
+					//ê°œë³„ í•¨ìˆ˜
 					fprintf(stream, "\t\tvoid %s(", procInfo_ClientServer[i].functionName_);
 
 
@@ -279,7 +277,7 @@ namespace server_baby
 					fprintf(stream, "\n");
 				}
 
-				//¸â¹ö
+				//ë©¤ë²„
 				fprintf(stream, "\tprivate:\n");
 				fprintf(stream, "\t\t%s* client_;\n", clientName_);
 				fprintf(stream, "\t};\n");
@@ -302,7 +300,7 @@ namespace server_baby
 			sprintf_s(fileName, "%s_CS_Stub.h", serverName_);
 			if (fopen_s(&stream, fileName, "w+") == 0)
 			{
-				//Çì´õ
+				//í—¤ë”
 				fprintf(stream, "#pragma once\n");
 				fprintf(stream, "#include <Windows.h>\n");
 				fprintf(stream, "#include \"NetRoot/NetServer/NetSessionID.h\"\n");
@@ -317,7 +315,7 @@ namespace server_baby
 				fprintf(stream, "namespace server_baby\n");
 				fprintf(stream, "{\n");
 
-				//»ı¼ºÀÚ
+				//ìƒì„±ì
 				fprintf(stream, "\tclass %s_CS_Stub final : public NetStub\n", serverName_);
 				fprintf(stream, "\t{\n");
 				fprintf(stream, "\tpublic:\n");
@@ -359,7 +357,7 @@ namespace server_baby
 				fprintf(stream, "\t\t}\n");
 				fprintf(stream, "\n");
 
-				//³ª´²ÁÖ±â
+				//ë‚˜ëˆ ì£¼ê¸°
 				fprintf(stream, "\t\tbool PacketProc(NetSessionID sessionID, NetDummyPacket* msg) override\n");
 				fprintf(stream, "\t\t{\n");
 				fprintf(stream, "\t\t\tWORD type;\n");
@@ -433,7 +431,7 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_SC_; i++)
 				{
-					//°³º° ÇÔ¼ö
+					//ê°œë³„ í•¨ìˆ˜
 					fprintf(stream, "\t\tbool %s(", procInfo_ClientServer[i].functionName_);
 
 
@@ -455,7 +453,7 @@ namespace server_baby
 					fprintf(stream, "\n");
 				}
 
-				//¸â¹ö
+				//ë©¤ë²„
 				fprintf(stream, "\tprivate:\n");
 				fprintf(stream, "\t\t%s* server_;\n", serverName_);
 				fprintf(stream, "\t};\n");
@@ -473,7 +471,7 @@ namespace server_baby
 			sprintf_s(fileName, "%s_SC_Stub.h", clientName_);
 			if (fopen_s(&stream, fileName, "w+") == 0)
 			{
-				//Çì´õ
+				//í—¤ë”
 				fprintf(stream, "#pragma once\n");
 				fprintf(stream, "#include <Windows.h>\n");
 				fprintf(stream, "#include \"NetRoot/NetServer/NetSessionID.h\"\n");
@@ -486,7 +484,7 @@ namespace server_baby
 				fprintf(stream, "namespace server_baby\n");
 				fprintf(stream, "{\n");
 
-				//»ı¼ºÀÚ
+				//ìƒì„±ì
 				fprintf(stream, "\tclass %s_SC_Stub final\n", clientName_);
 				fprintf(stream, "\t{\n");
 				fprintf(stream, "\tpublic:\n");
@@ -520,7 +518,7 @@ namespace server_baby
 				fprintf(stream, "\t\t}\n");
 				fprintf(stream, "\n");
 
-				//³ª´²ÁÖ±â
+				//ë‚˜ëˆ ì£¼ê¸°
 				fprintf(stream, "\t\tbool PacketProc(NetSessionID sessionID, NetDummyPacket* msg)\n");
 				fprintf(stream, "\t\t{\n");
 				fprintf(stream, "\t\t\tWORD type;\n");
@@ -590,7 +588,7 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_CS_; i++)
 				{
-					//°³º° ÇÔ¼ö
+					//ê°œë³„ í•¨ìˆ˜
 					fprintf(stream, "\t\tbool %s(", procInfo_ServerClient[i].functionName_);
 
 
@@ -612,7 +610,7 @@ namespace server_baby
 					fprintf(stream, "\n");
 				}
 
-				//¸â¹ö
+				//ë©¤ë²„
 				fprintf(stream, "\tprivate:\n");
 				fprintf(stream, "\t\t%s* client_;\n", clientName_);
 				fprintf(stream, "\t};\n");
