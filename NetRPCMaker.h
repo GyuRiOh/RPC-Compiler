@@ -192,7 +192,7 @@ namespace server_baby
 
 					fprintf(stream, "\n");
 
-					fprintf(stream, "\t\t\tserver_->SendPacket_Async(sessionID, msg);\n");
+					fprintf(stream, "\t\t\tserver_->AsyncSendPacket(sessionID, msg);\n");
 					fprintf(stream, "\t\t\tNetPacket::Free(msg);\n");
 
 					fprintf(stream, "\t\t}\n");
