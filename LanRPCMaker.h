@@ -152,16 +152,15 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_SC_; i++)
 				{
-
-					if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
-						continue;
-
 					//개별 함수
 					fprintf(stream, "\t\tvoid %s(", procInfo_ServerClient[i].functionName_);
 
 
 					for (int j = 0; j < procInfo_ServerClient[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
+							break;
+
 						char* typeBuf = nullptr;
 						char* type = strtok_s(procInfo_ServerClient[i].param_[j].type, "=", &typeBuf);
 						fprintf(stream, "%s %s, ",
@@ -180,6 +179,9 @@ namespace server_baby
 
 					for (int j = 0; j < procInfo_ServerClient[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
+							break;
+
 						if (*procInfo_ServerClient[i].param_[j].charaLen != NULL)
 						{
 							fprintf(stream, "\t\t\tmsg->EnqData((char*)%s, %s);\n", procInfo_ServerClient[i].param_[j].name,
@@ -236,15 +238,15 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_CS_; i++)
 				{
-					if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
-						continue;
-
 					//개별 함수
 					fprintf(stream, "\t\tvoid %s(", procInfo_ClientServer[i].functionName_);
 
 
 					for (int j = 0; j < procInfo_ClientServer[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
+							break;
+
 						char* typeBuf = nullptr;
 						char* type = strtok_s(procInfo_ClientServer[i].param_[j].type, "=", &typeBuf);
 						fprintf(stream, "%s %s, ",
@@ -263,6 +265,9 @@ namespace server_baby
 
 					for (int j = 0; j < procInfo_ClientServer[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
+							break;
+
 						if (*procInfo_ClientServer[i].param_[j].charaLen != NULL)
 						{
 							fprintf(stream, "\t\t\tmsg->EnqData((char*)%s, %s);\n", procInfo_ClientServer[i].param_[j].name,
@@ -364,14 +369,15 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_CS_; i++)
 				{
-					if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
-						continue;
 
 					fprintf(stream, "\t\t\tcase %d:\n", i);
 
 					fprintf(stream, "\t\t\t{\n");
 					for (int j = 0; j < procInfo_ClientServer[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
+							break;
+
 						char* typeBuf = nullptr;
 						char tempType[64] = { 0 };
 						strcpy_s(tempType, procInfo_ClientServer[i].param_[j].type);
@@ -384,6 +390,9 @@ namespace server_baby
 
 					for (int j = 0; j < procInfo_ClientServer[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
+							break;
+
 						if (*procInfo_ClientServer[i].param_[j].charaLen != NULL)
 						{
 
@@ -411,6 +420,9 @@ namespace server_baby
 
 					for (int j = 0; j < procInfo_ClientServer[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
+							break;
+
 						fprintf(stream, "%s, ", procInfo_ClientServer[i].param_[j].name);
 					}
 
@@ -431,8 +443,7 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_CS_; i++)
 				{
-					if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
-						continue;
+					
 
 					//개별 함수
 					fprintf(stream, "\t\tbool %s(", procInfo_ClientServer[i].functionName_);
@@ -440,6 +451,9 @@ namespace server_baby
 
 					for (int j = 0; j < procInfo_ClientServer[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
+							break;
+
 						char* typeBuf = nullptr;
 						char* type = strtok_s(procInfo_ClientServer[i].param_[j].type, "=", &typeBuf);
 						fprintf(stream, "%s %s, ",
@@ -532,8 +546,6 @@ namespace server_baby
 				for (int i = 0; i < procCount_SC_; i++)
 				{
 
-					if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
-						continue;
 
 
 					fprintf(stream, "\t\t\tcase %d:\n", i);
@@ -541,6 +553,9 @@ namespace server_baby
 					fprintf(stream, "\t\t\t{\n");
 					for (int j = 0; j < procInfo_ServerClient[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
+							break;
+
 						char* typeBuf = nullptr;
 						char tempType[64] = { 0 };
 						strcpy_s(tempType, procInfo_ServerClient[i].param_[j].type);
@@ -552,6 +567,9 @@ namespace server_baby
 
 					for (int j = 0; j < procInfo_ServerClient[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
+							break;
+
 						if (*procInfo_ServerClient[i].param_[j].charaLen != NULL)
 						{
 							fprintf(stream, "\t\t\t\tRPCBuffer %sBuf(%s);\n", procInfo_ServerClient[i].param_[j].name,
@@ -578,6 +596,9 @@ namespace server_baby
 
 					for (int j = 0; j < procInfo_ServerClient[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
+							break;
+
 						fprintf(stream, "%s, ", procInfo_ServerClient[i].param_[j].name);
 					}
 
@@ -597,15 +618,15 @@ namespace server_baby
 				for (int i = 0; i < procCount_SC_; i++)
 				{
 
-					if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
-						continue;
-
 					//개별 함수
 					fprintf(stream, "\t\tbool %s(", procInfo_ServerClient[i].functionName_);
 
 
 					for (int j = 0; j < procInfo_ServerClient[i].paramNum_; j++)
 					{
+						if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
+							break;
+
 						char* typeBuf = nullptr;
 						char* type = strtok_s(procInfo_ServerClient[i].param_[j].type, "=", &typeBuf);
 						fprintf(stream, "%s %s, ",
