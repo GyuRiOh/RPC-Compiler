@@ -6,16 +6,36 @@
 #include "LanRPCMaker.h"
 
 using namespace server_baby;
+using namespace std;
 
 int main()
 {
+    char NetSCProtocol[100] = { 0 };
+    char NetCSProtocol[100] = { 0 };
+    char LanSCProtocol[100] = { 0 };
+    char LanCSProtocol[100] = { 0 };
 
-    //cin//scanf   
-    NetRPCMaker* control = new NetRPCMaker("YongWoo_SC_fwkofke.ini", "YongWoo_CS_werfweq.ini");
+    cout << "Net-SC :" << endl;
+    cin >> NetSCProtocol;
+
+
+    cout << "Net-CS :" << endl;
+    cin >> NetCSProtocol;
+
+
+    //cout << "Lan-SC :" << endl;
+    //cin >> LanSCProtocol;
+
+
+    //cout << "Lan-CS :" << endl;
+    //cin >> LanCSProtocol;
+
+
+    NetRPCMaker* control = new NetRPCMaker(NetSCProtocol, NetCSProtocol);
     control->CreateCode();
 
-    LanRPCMaker* control2 = new LanRPCMaker("YongWoo_SC_fwkofke.ini", "YongWoo_CS_werfweq.ini");
-    control2->CreateCode();
+    //LanRPCMaker* control2 = new LanRPCMaker(LanSCProtocol, LanCSProtocol);
+    //control2->CreateCode();
 
     std::cout << "RPC Created!\n";
 }

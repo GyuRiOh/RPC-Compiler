@@ -1,1 +1,0 @@
-LOGLEVEL = 2, [2023/05/31/0/38/57] SC_CS Protocol Name - Not Same 

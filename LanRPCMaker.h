@@ -59,7 +59,6 @@ namespace server_baby
 				}
 
 				procInfo_ServerClient[procCount_SC_].paramNum_ = paramNum;
-
 				procCount_SC_++;
 				tok = strtok_s(buffer, "$", &buffer);
 			}
@@ -109,7 +108,6 @@ namespace server_baby
 				}
 
 				procInfo_ClientServer[procCount_CS_].paramNum_ = paramNum;
-
 				procCount_CS_++;
 				tok = strtok_s(buffer, "$", &buffer);
 			}
@@ -154,6 +152,10 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_SC_; i++)
 				{
+
+					if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
+						continue;
+
 					//개별 함수
 					fprintf(stream, "\t\tvoid %s(", procInfo_ServerClient[i].functionName_);
 
@@ -173,7 +175,7 @@ namespace server_baby
 					fprintf(stream, "\t\t{\n");
 					fprintf(stream, "\t\t\tLanPacket* msg = LanPacket::Alloc();\n");
 					fprintf(stream, "\n");
-					fprintf(stream, "\t\t\t*msg << (unsigned short)%d;\n", i);
+					fprintf(stream, "\t\t\t*msg << static_cast<unsigned short>(%d);\n", i);
 
 
 					for (int j = 0; j < procInfo_ServerClient[i].paramNum_; j++)
@@ -234,6 +236,9 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_CS_; i++)
 				{
+					if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
+						continue;
+
 					//개별 함수
 					fprintf(stream, "\t\tvoid %s(", procInfo_ClientServer[i].functionName_);
 
@@ -253,7 +258,7 @@ namespace server_baby
 					fprintf(stream, "\t\t{\n");
 					fprintf(stream, "\t\t\tLanPacket* msg = LanPacket::Alloc();\n");
 					fprintf(stream, "\n");
-					fprintf(stream, "\t\t\t*msg << (unsigned short)%d;\n", i);
+					fprintf(stream, "\t\t\t*msg << static_cast<unsigned short>(%d);\n", i);
 
 
 					for (int j = 0; j < procInfo_ClientServer[i].paramNum_; j++)
@@ -357,8 +362,11 @@ namespace server_baby
 				fprintf(stream, "\t\t\tswitch (type)\n");
 				fprintf(stream, "\t\t\t{\n");
 
-				for (int i = 0; i < procCount_SC_; i++)
+				for (int i = 0; i < procCount_CS_; i++)
 				{
+					if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
+						continue;
+
 					fprintf(stream, "\t\t\tcase %d:\n", i);
 
 					fprintf(stream, "\t\t\t{\n");
@@ -421,8 +429,11 @@ namespace server_baby
 
 
 
-				for (int i = 0; i < procCount_SC_; i++)
+				for (int i = 0; i < procCount_CS_; i++)
 				{
+					if (strcmp(procInfo_ClientServer[i].param_[0].type, "NULL") == 0)
+						continue;
+
 					//개별 함수
 					fprintf(stream, "\t\tbool %s(", procInfo_ClientServer[i].functionName_);
 
@@ -518,8 +529,13 @@ namespace server_baby
 				fprintf(stream, "\t\t\tswitch (type)\n");
 				fprintf(stream, "\t\t\t{\n");
 
-				for (int i = 0; i < procCount_CS_; i++)
+				for (int i = 0; i < procCount_SC_; i++)
 				{
+
+					if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
+						continue;
+
+
 					fprintf(stream, "\t\t\tcase %d:\n", i);
 
 					fprintf(stream, "\t\t\t{\n");
@@ -578,8 +594,12 @@ namespace server_baby
 
 				fprintf(stream, "\n");
 
-				for (int i = 0; i < procCount_CS_; i++)
+				for (int i = 0; i < procCount_SC_; i++)
 				{
+
+					if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
+						continue;
+
 					//개별 함수
 					fprintf(stream, "\t\tbool %s(", procInfo_ServerClient[i].functionName_);
 

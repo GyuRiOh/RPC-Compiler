@@ -1,0 +1,23 @@
+ServerName = "GamePipe"
+ClientName = "GameClient"
+
+$ResLogin([BYTE]status, [INT64]accountNo,)
+$ResCharacterSelect([BYTE]status,)
+$ResCreateMyCharacter([INT64]clientID, [BYTE]charaType, [WCHAR*=20]nickName, [float]posX, [float]posY, [USHORT]rotation, [int]crystal, [int]HP, [INT64]Exp, [USHORT]level,)
+$ResCreateOtherCharacter([INT64]clientID, [BYTE]charaType, [WCHAR*=20]nickName, [float]posX, [float]posY, [USHORT]rotation, [USHORT]level, [BYTE]respawn, [BYTE]sit, [BYTE]die,)
+$ResRemoveObject([INT64]clientID,)
+$ResMoveCharacter([INT64]clientID, [float]posX, [float]posY, [USHORT]rotation, [BYTE]vkey, [BYTE]hkey,)
+$ResStopCharacter([INT64]clientID, [float]posX, [float]posY, [USHORT]rotation,)
+$ResMoveMonster([INT64]clientID, [float]posX, [float]posY, [USHORT]rotation,)
+$ResAttack1([INT64]clientID,)
+$ResAttack2([INT64]clientID,)
+$ResMonsterAttack([INT64]clientID,)
+$ResDamage([INT64]attackClientID, [INT64]targetClientID, [int]damage,)
+$ResMonsterDie([INT64]monsterClientID,)
+$ResCreateCrystal([INT64]crystalClientID, [BYTE]crystalType, [float]posX, [float]posY,)
+$ResPick([INT64]clientID,)
+$ResSit([INT64]clientID,)
+$ResPickCrystal([INT64]clientID, [INT64]crystalClientID, [int]amountCrystal,)
+$ResPlayerHP([INT64]hp,)
+$ResPlayerDie([INT64]clientID,)
+$ResPlayerRestart([NULL]null,)
