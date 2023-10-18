@@ -111,10 +111,24 @@ namespace server_baby
 			case 4:
 			{
 				INT64 clientID;
+				float posX;
+				float posY;
+				USHORT rotation;
+				BYTE respawn;
+				*msg >> clientID;
+				*msg >> posX;
+				*msg >> posY;
+				*msg >> rotation;
+				*msg >> respawn;
+				return ResCreateMonsterCharacter(clientID, posX, posY, rotation, respawn, sessionID);
+			}
+			case 5:
+			{
+				INT64 clientID;
 				*msg >> clientID;
 				return ResRemoveObject(clientID, sessionID);
 			}
-			case 5:
+			case 6:
 			{
 				INT64 clientID;
 				float posX;
@@ -130,7 +144,7 @@ namespace server_baby
 				*msg >> hkey;
 				return ResMoveCharacter(clientID, posX, posY, rotation, vkey, hkey, sessionID);
 			}
-			case 6:
+			case 7:
 			{
 				INT64 clientID;
 				float posX;
@@ -142,7 +156,7 @@ namespace server_baby
 				*msg >> rotation;
 				return ResStopCharacter(clientID, posX, posY, rotation, sessionID);
 			}
-			case 7:
+			case 8:
 			{
 				INT64 clientID;
 				float posX;
@@ -154,25 +168,25 @@ namespace server_baby
 				*msg >> rotation;
 				return ResMoveMonster(clientID, posX, posY, rotation, sessionID);
 			}
-			case 8:
+			case 9:
 			{
 				INT64 clientID;
 				*msg >> clientID;
 				return ResAttack1(clientID, sessionID);
 			}
-			case 9:
+			case 10:
 			{
 				INT64 clientID;
 				*msg >> clientID;
 				return ResAttack2(clientID, sessionID);
 			}
-			case 10:
+			case 11:
 			{
 				INT64 clientID;
 				*msg >> clientID;
 				return ResMonsterAttack(clientID, sessionID);
 			}
-			case 11:
+			case 12:
 			{
 				INT64 attackClientID;
 				INT64 targetClientID;
@@ -182,13 +196,13 @@ namespace server_baby
 				*msg >> damage;
 				return ResDamage(attackClientID, targetClientID, damage, sessionID);
 			}
-			case 12:
+			case 13:
 			{
 				INT64 monsterClientID;
 				*msg >> monsterClientID;
 				return ResMonsterDie(monsterClientID, sessionID);
 			}
-			case 13:
+			case 14:
 			{
 				INT64 crystalClientID;
 				BYTE crystalType;
@@ -200,19 +214,19 @@ namespace server_baby
 				*msg >> posY;
 				return ResCreateCrystal(crystalClientID, crystalType, posX, posY, sessionID);
 			}
-			case 14:
+			case 15:
 			{
 				INT64 clientID;
 				*msg >> clientID;
 				return ResPick(clientID, sessionID);
 			}
-			case 15:
+			case 16:
 			{
 				INT64 clientID;
 				*msg >> clientID;
 				return ResSit(clientID, sessionID);
 			}
-			case 16:
+			case 17:
 			{
 				INT64 clientID;
 				INT64 crystalClientID;
@@ -222,19 +236,19 @@ namespace server_baby
 				*msg >> amountCrystal;
 				return ResPickCrystal(clientID, crystalClientID, amountCrystal, sessionID);
 			}
-			case 17:
+			case 18:
 			{
 				INT64 hp;
 				*msg >> hp;
 				return ResPlayerHP(hp, sessionID);
 			}
-			case 18:
+			case 19:
 			{
 				INT64 clientID;
 				*msg >> clientID;
 				return ResPlayerDie(clientID, sessionID);
 			}
-			case 19:
+			case 20:
 			{
 				return ResPlayerRestart(sessionID);
 			}
@@ -258,6 +272,11 @@ namespace server_baby
 		}
 
 		bool ResCreateOtherCharacter(INT64 clientID, BYTE charaType, WCHAR* nickName, float posX, float posY, USHORT rotation, USHORT level, BYTE respawn, BYTE sit, BYTE die, NetSessionID sessionID)
+		{
+			return false;
+		}
+
+		bool ResCreateMonsterCharacter(INT64 clientID, float posX, float posY, USHORT rotation, BYTE respawn, NetSessionID sessionID)
 		{
 			return false;
 		}

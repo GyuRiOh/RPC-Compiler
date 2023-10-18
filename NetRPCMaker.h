@@ -152,7 +152,7 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_SC_; i++)
 				{
-					//개별 함수
+					//개별 함수 - SessionID
 					fprintf(stream, "\t\tvoid %s(", procInfo_ServerClient[i].functionName_);
 
 					
@@ -200,6 +200,55 @@ namespace server_baby
 
 					fprintf(stream, "\t\t}\n");
 					fprintf(stream, "\n");
+
+					//개별 함수 - SessionIDSet
+					fprintf(stream, "\t\tvoid %s(", procInfo_ServerClient[i].functionName_);
+
+
+					for (int j = 0; j < procInfo_ServerClient[i].paramNum_; j++)
+					{
+						if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
+							break;
+
+						char* typeBuf = nullptr;
+						char* type = strtok_s(procInfo_ServerClient[i].param_[j].type, "=", &typeBuf);
+						fprintf(stream, "%s %s, ",
+							type, procInfo_ServerClient[i].param_[j].name);
+
+						if (*typeBuf != NULL)
+							strcpy_s(procInfo_ServerClient[i].param_[j].charaLen, typeBuf);
+					}
+
+					fprintf(stream, "NetSessionIDSet* sessionIDset)\n");
+					fprintf(stream, "\t\t{\n");
+					fprintf(stream, "\t\t\tNetPacket* msg = NetPacket::Alloc();\n");
+					fprintf(stream, "\n");
+					fprintf(stream, "\t\t\t*msg << static_cast<unsigned short>(%d);\n", i);
+
+
+					for (int j = 0; j < procInfo_ServerClient[i].paramNum_; j++)
+					{
+						if (strcmp(procInfo_ServerClient[i].param_[0].type, "NULL") == 0)
+							break;
+
+						if (*procInfo_ServerClient[i].param_[j].charaLen != NULL)
+						{
+							fprintf(stream, "\t\t\tmsg->EnqData((char*)%s, %s);\n", procInfo_ServerClient[i].param_[j].name,
+								procInfo_ServerClient[i].param_[j].charaLen);
+						}
+						else
+							fprintf(stream, "\t\t\t*msg << %s;\n", procInfo_ServerClient[i].param_[j].name);
+
+					}
+
+
+					fprintf(stream, "\n");
+
+					fprintf(stream, "\t\t\tserver_->AsyncSendPacket(sessionIDset, msg);\n");
+					fprintf(stream, "\t\t\tNetPacket::Free(msg);\n");
+
+					fprintf(stream, "\t\t}\n");
+					fprintf(stream, "\n");
 				}
 
 				//멤버
@@ -238,7 +287,7 @@ namespace server_baby
 
 				for (int i = 0; i < procCount_CS_; i++)
 				{
-					//개별 함수
+					//개별 함수-SessionID
 					fprintf(stream, "\t\tvoid %s(", procInfo_ClientServer[i].functionName_);
 
 
@@ -286,6 +335,7 @@ namespace server_baby
 
 					fprintf(stream, "\t\t}\n");
 					fprintf(stream, "\n");
+
 				}
 
 				//멤버
